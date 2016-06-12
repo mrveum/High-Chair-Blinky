@@ -18,32 +18,34 @@ pin 13 = button, yellow
 
 CRGB leds[NUM_LEDS];
 uint8_t button[] = {10, 11, 12, 13};
+uint8_t button[] = {10, 11, 12, 13};
+uint8_t red[] = {255, 0, 0, 255};
+uint8_t green[] = {0, 255, 0, 255};
+uint8_t blue[] = {0, 0, 255, 0};
+
+/* DEBOUNCE PREP
+bool lastButton[] = {LOW, LOW, LOW, LOW};
+bool currentButton[] = {LOW, LOW, LOW, LOW};
+uint32_t currentMillis = 0;
+uint32_t prevMillis = 0;
+*/
 
 void setup() {
+//  currentMillis = millis();
+//  prevMillis = currentMillis;
+    
   FastLED.addLeds<NEOPIXEL, DATA_PIN>(leds, NUM_LEDS);
 }
 
 void loop() {
   for (int b = 0; b < 4; b++){
     if (digitalRead(button[b]) == HIGH){
-      switch (b){
-        case 0:
-          leds[b] = CRGB::Red;
-          break;
-        case 1:
-          leds[b] = CRGB::Green;
-          break;
-        case 2:
-          leds[b] = CRGB::Blue;
-          break;
-        case 3:
-          leds[b] = CRGB::Yellow;
-          break;
-      }
-    }  
+      leds[b].setRGB(red[b], green[b], blue[b]);
+    }
     else if (digitalRead(button[b]) == LOW){
-        leds[b] = CRGB::Black;
+        leds[b] = CRGB::Black];
     }
     FastLED.show();
   }
+  delay(10);
 }
